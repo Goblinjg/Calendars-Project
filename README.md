@@ -91,9 +91,6 @@ Estrutura monorepo:
 └── README.md # Documentação do projeto
 ```
 
-bash
-Copiar código
-
 ## 🚀 Como Rodar o Projeto
 
 (_Instruções detalhadas serão adicionadas nas próximas fases de desenvolvimento, após a configuração inicial de cada parte (backend e frontend)._)
