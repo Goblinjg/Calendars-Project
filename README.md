@@ -1,7 +1,7 @@
 <h1 align="center" style="font-weight: bold;">
   Sistema de Gerenciamento de Vida Acadêmica
 </h1>
-
+   
 <p align="center">
   <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React">
   <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite">
@@ -106,7 +106,7 @@ Estrutura monorepo:
 2.  Navegue até a pasta do projeto: `cd Calendars-Project`
 3.  Crie e configure o ambiente do backend e do frontend:
 
-```bash
+ ```bash 
 # Configure o backend em um terminal
 cd backend
 npm install
