@@ -83,7 +83,7 @@ Esta é a solução para a digitalização da vida acadêmica do estudante, um s
 
 ### 3.2. Passos Iniciais
 
-1.  Clone o repositório: `git clone https://github.com/Goblinjg/joao_salomao.git`
+1.  Clone o repositório: `git clone https://github.com/Goblinjg/Calendars-Project.git`
 2.  Navegue até a pasta do projeto: `cd Calendars-Project`
 3.  Crie e configure o ambiente do backend e do frontend:
 
