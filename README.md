@@ -126,7 +126,7 @@ Estrutura monorepo:
 
 ```
 /
-├── apps/ # Contém as aplicações do projeto
+├── Code/ # Contém as aplicações do projeto
 │   ├── backend/ # Aplicação da API em Node.js/Express
 │   │   ├── src/
 │   │   │   ├── controllers/ # Lógica de requisição
@@ -146,8 +146,13 @@ Estrutura monorepo:
 │       ├── tailwind.config.js # Configuração do Tailwind
 │       └── components.json # Configuração do Shadcn/ReUI
 │
-├── requisitos/ # Documentação técnica e de requisitos do projeto
-│   └── Documento de Requisitos-1.pdf
+├── Documentacao/ # Documentação técnica e de requisitos do projeto
+│   ├── Requisitos/
+│       └── Documento de Requisitos-2.pdf
+│   ├── Diagramas/
+│       ├── Sequencia/
+│       ├── Diagrama de Classes . pdf
+│       └── Diagrama de Pacotes . png
 │
 ├── LICENSE # Licença do projeto
 ├── .gitignore # Arquivos e pastas ignorados pelo Git
