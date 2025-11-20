@@ -158,3 +158,35 @@ Estrutura monorepo:
 ├── .gitignore # Arquivos e pastas ignorados pelo Git
 └── README.md # Documentação do projeto
 ```
+## 6. PADRÕES DE VERSIONAMENTO E ORGANIZAÇÃO
+
+Para garantir a organização e o rastreamento eficiente do histórico do projeto, adotamos os seguintes padrões para o uso do Git e estrutura de arquivos.
+
+### 6.1. Padrões de Commit (Conventional Commits)
+Utilizamos o padrão de *Conventional Commits* para manter o histórico limpo e legível.
+
+* **`feat:`** Adição de uma nova funcionalidade (ex: `feat: adiciona página de login`).
+* **`fix:`** Correção de um bug (ex: `fix: corrige erro na validação de senha`).
+* **`docs:`** Alterações apenas em documentação (ex: `docs: atualiza README com instruções de instalação`).
+* **`style:`** Alterações que não afetam o significado do código (espaços, formatação, etc).
+* **`refactor:`** Alteração de código que não corrige um bug nem adiciona uma funcionalidade (melhoria de estrutura).
+* **`chore:`** Atualização de tarefas de build, configurações de ferramentas, etc (ex: `chore: configura eslint`).
+
+### 6.2. Uso de Branches
+* **`main`**: Branch principal contendo o código estável e testado.
+* **`feat/nome-da-feature`**: Branches temporárias para desenvolvimento de novas funcionalidades.
+* **`fix/nome-do-bug`**: Branches para correção de erros específicos.
+
+### 6.3. Organização de Pastas
+A separação de responsabilidades no repositório é estrita:
+* **`Code/`**: Destinada exclusivamente para código-fonte (Backend e Frontend).
+* **`Documentacao/`**: Destinada a artefatos de engenharia de software (Requisitos, Diagramas UML, Manuais).
+
+### 6.4. Arquivo .gitignore
+O arquivo `.gitignore` foi configurado na raiz do projeto para evitar que arquivos desnecessários ou sensíveis sejam enviados ao repositório, mantendo o projeto leve e seguro.
+
+**Configurações principais aplicadas:**
+* Ignora **dependências** (`node_modules`) em todas as subpastas.
+* Ignora **pastas de build** (`dist`, `.vite`).
+* Ignora **arquivos de ambiente** contendo segredos (`.env`).
+* Ignora **arquivos de sistema e IDE** (`.DS_Store`, `.vscode`).
