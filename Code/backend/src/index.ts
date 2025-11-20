@@ -1,19 +1,17 @@
 import express from 'express';
-import cors from 'cors';
+import cors from 'cors'; 
+import { AnotacaoController } from './controller/AnotacaoController';
 
 const app = express();
-const port = 3001; // Porta padrão para a API
+const PORT = 3000;
 
-// Middlewares
-app.use(cors()); // Permite requisições do frontend
-app.use(express.json()); // Permite ao Express entender JSON
+app.use(express.json());
+app.use(cors()); 
+app.post('/anotacoes', AnotacaoController.criar);
+app.get('/anotacoes', AnotacaoController.listar);
+app.put('/anotacoes/:id', AnotacaoController.atualizar);
+app.delete('/anotacoes/:id', AnotacaoController.excluir);
 
-// Rota de teste
-app.get('/', (req, res) => {
-  res.send('API do Sistema de Gerenciamento Acadêmico está no ar!');
-});
-
-// Inicia o servidor
-app.listen(port, () => {
-  console.log(`[backend]: 🚀 Servidor rodando em http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
