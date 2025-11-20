@@ -89,12 +89,12 @@ Esta é a solução para a digitalização da vida acadêmica do estudante, um s
 
 ```bash
 # 1. Configure o backend (começando da raiz do projeto)
-cd apps/backend
+cd Code/backend
 npm install
 # npm run dev
 
 # 2. Configure o frontend (em outro terminal, começando da raiz do projeto)
-cd apps/frontend
+cd Code/frontend
 npm install
 # npm run dev
 ```
