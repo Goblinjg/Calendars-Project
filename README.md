@@ -190,3 +190,53 @@ O arquivo `.gitignore` foi configurado na raiz do projeto para evitar que arquiv
 * Ignora **pastas de build** (`dist`, `.vite`).
 * Ignora **arquivos de ambiente** contendo segredos (`.env`).
 * Ignora **arquivos de sistema e IDE** (`.DS_Store`, `.vscode`).
+
+## 7. BOAS PRÁTICAS DE CODIFICAÇÃO UTILIZADAS
+
+### 7.1. Padrões de projeto
+
+Adotamos o padrão S.O.L.I.D para garantir um código limpo, modular e de fácil manutenção:
+
+- #### [S]ingle Responsibility Principle (Princípio da Responsabilidade Única)
+- #### [O]pen/Closed Principle (Princípio do Aberto/Fechado)
+- #### [L]iskov Substitution Principle (Princípio da Substituição de Liskov)
+- #### [I]nterface Segregation Principle (Princípio da Segregação de Interfaces)
+- #### [D]ependency Inversion Principle (Princípio da Inversão de Dependências)
+
+### 7.2. Padrões de nomenclatura
+
+- **Camel Case:** Utilizado para nomes de variáveis e funções (ex: `minhaVariavel`, `calcularSoma()`).
+- **Pascal Case:** Utilizado para nomes de classes e componentes React (ex: `MinhaClasse`, `MeuComponente`).
+- **Kebab Case:** Utilizado para nomes de arquivos e pastas (ex: `minha-pasta`, `meu-arquivo.ts`).
+
+### 7.3. Comentários e Documentação
+
+- Comentários claros e concisos para explicar trechos complexos de código.
+
+- Comente por quê algo é feito, não apenas o que está sendo feito (o código já mostra o que).
+
+- Comentarios serão feitos apenas quando realmente agregarem valor ao entendimento do código.
+
+### 7.4. Formatação e estilo consistentes
+
+- Identação padronizada
+
+- Quebrar linhas muito longas para melhorar a legibilidade
+
+- Deixar espaços em branco onde necessário para separar blocos lógicos de código
+
+### 7.5. Funções e Métodos simples
+
+- Funções devem ter uma única responsabilidade
+
+- Evitar funções muito longas ou complexas
+
+- Prefirir clareza em vez de engenhosidade.
+
+### 7.6. Tratamento de erros
+
+- Serão utilizados execeções, mensagens de erro claras e logging adequado para facilitar a depuração e manutenção do código.
+
+### 7.7. Testes
+
+- Codigo sera feito de maneira simples e modular pra permitir a escrita de testes unitários e de integração no futuro.
