@@ -16,7 +16,7 @@ pnpm-debug.log*
 .env
 .env.local
 .env.*.local
-
+.sqlite
 # Arquivos de IDE e Sistema
 .DS_Store
 .idea/
