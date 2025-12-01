@@ -32,21 +32,27 @@ export function Anotacoes() {
   async function handleSalvar(e: React.FormEvent) {
     e.preventDefault();
     if (!titulo) return alert('O título é obrigatório!');
+    const usuarioLogadoString = localStorage.getItem('usuario_logado');
+    const usuarioLogado = JSON.parse(usuarioLogadoString || '{}');
+    if (!usuarioLogado || !usuarioLogado.user_id) {
+      alert("Sessão expirada ou usuário não autenticado. Faça login novamente.");
+      return;
+    }
 
     try {
       if (idEdicao) {
-        // (PUT) [RF005]
+        // (PUT) [RF005] Atualizar Anotação
         await api.put(`/anotacoes/${idEdicao}`, {
           titulo,
           conteudo
         });
         alert('Anotação atualizada!');
       } else {
-        // (POST) [RF003]
+        // (POST) [RF003] Criar Anotação
         await api.post('/anotacoes', {
           titulo,
           conteudo,
-          user_id: 1 
+          user_id: usuarioLogado.user_id 
         });
         alert('Anotação criada!');
       }
