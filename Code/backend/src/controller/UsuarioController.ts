@@ -40,8 +40,7 @@ export const UsuarioController = {
       res.status(500).json({ error: 'Erro interno ao cadastrar usuário.' });
     }
   },
-
-  // RF001: Autenticar (Login)
+   // RF001: Autenticar (Login)
   autenticar: async (req: Request, res: Response) => {
     const { email, senha } = req.body;
 
