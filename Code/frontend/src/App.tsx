@@ -1,19 +1,21 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Login } from './view/I_Login';   // Ajuste o caminho se necessário
-import { Cadastro } from './view/I_Cadastro'; // Ajuste o caminho se necessário
-import { Anotacoes } from './view/I_Anotacoes'; // Ajuste o caminho se necessário
-import type { JSX } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Login } from "./view/I_Login"; 
+import { Cadastro } from "./view/I_Cadastro"; 
+import { Anotacoes } from "./view/I_Anotacoes";
+import { Dashboard } from "./view/I_Dashboard"; 
+import { Layout } from "./components/ui/Layout";
+import type { JSX } from "react";
 
 // Componente para proteger rotas (Só deixa passar se tiver logado)
 const RotaPrivada = ({ children }: { children: JSX.Element }) => {
-  const usuarioLogado = localStorage.getItem('usuario_logado');
-  
+  const usuarioLogado = localStorage.getItem("usuario_logado");
+
   // Se não tiver usuário salvo, manda pro login
   if (!usuarioLogado) {
     return <Navigate to="/login" />;
   }
 
-  // Se tiver, mostra o conteúdo (ex: Anotações)
+  // Se tiver, mostra o conteúdo (ex: Dashboard/Anotações)
   return children;
 };
 
@@ -28,26 +30,20 @@ export function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
 
-        {/* Rotas Privadas (Onde o usuário cai após o login) */}
-        {/* No LoginView.tsx definimos navigate('/dashboard'), então precisamos dessa rota: */}
-        <Route 
-          path="/dashboard" 
+        {/* Todas as rotas dentro do Layout terão a Sidebar */}
+        <Route
           element={
             <RotaPrivada>
-              <Anotacoes />
+              <Layout />
             </RotaPrivada>
-          } 
-        />
-        
-        {/* Rota direta para anotações, se precisar */}
-        <Route 
-          path="/anotacoes" 
-          element={
-            <RotaPrivada>
-              <Anotacoes />
-            </RotaPrivada>
-          } 
-        />
+          }
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* Rota para anotações */}
+          <Route path="/anotacoes" element={<Anotacoes />} />
+
+        </Route>
       </Routes>
     </BrowserRouter>
   );

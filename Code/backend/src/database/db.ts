@@ -1,17 +1,16 @@
+import sqlite3 from "sqlite3";
 
-import sqlite3 from 'sqlite3';
-
-const db = new sqlite3.Database('./database.sqlite', (err) => {
+const db = new sqlite3.Database("./database.sqlite", (err) => {
   if (err) {
-    console.error('Erro ao conectar no SQLite:', err.message);
+    console.error("Erro ao conectar no SQLite:", err.message);
   } else {
-    console.log('Conectado ao banco de dados SQLite.');
+    console.log("Conectado ao banco de dados SQLite.");
     db.run("PRAGMA foreign_keys = ON"); // permite chaves estrangeiras
   }
 });
 
 db.serialize(() => {
-  // 1. Tabela Usuarios atualizada
+  // 1. Tabela Usuarios
   db.run(`
     CREATE TABLE IF NOT EXISTS usuarios (
       user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,6 +40,32 @@ db.serialize(() => {
       data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
       user_id INTEGER,
       FOREIGN KEY(user_id) REFERENCES usuarios(user_id) ON DELETE CASCADE
+    )
+  `);
+
+  // 4. Tabela Tarefas
+  db.run(`
+    CREATE TABLE IF NOT EXISTS tarefas (
+      tarefa_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      descricao TEXT NOT NULL,
+      data_entrega DATETIME,
+      status TEXT DEFAULT 'A Fazer',
+      user_id INTEGER,
+      materia_id INTEGER,
+      FOREIGN KEY(user_id) REFERENCES usuarios(user_id) ON DELETE CASCADE,
+      FOREIGN KEY(materia_id) REFERENCES materias(materia_id) ON DELETE SET NULL
+    )
+  `);
+
+  // 5. Tabela Horarios Aula
+  db.run(`
+    CREATE TABLE IF NOT EXISTS horarios_aula (
+      horario_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      dia_semana TEXT NOT NULL,
+      hora_inicio TEXT NOT NULL,
+      hora_fim TEXT NOT NULL,
+      materia_id INTEGER,
+      FOREIGN KEY(materia_id) REFERENCES materias(materia_id) ON DELETE CASCADE
     )
   `);
 });
