@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 export function Cadastro() {
   const navigate = useNavigate();
   
-  // RF002 - Fluxo Principal: Passo 2 (Campos Nome, Email, Senha, Confirmar Senha) 
+  // RF002 - Cadastra Usuario
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -17,8 +17,7 @@ export function Cadastro() {
     e.preventDefault();
     setMensagem({ tipo: '', texto: '' });
 
-    // RF002 - Regra de Negócio 2: Senha e Confirmar Senha devem ser idênticos [cite: 140]
-    // RF002 - Fluxo Alternativo 4a/5a 
+    // RF002 - Regra de Negócio 2: Senha e Confirmar Senha devem ser idênticos 
     if (senha !== confirmarSenha) {
       setMensagem({ tipo: 'erro', texto: 'As senhas não coincidem.' });
       return;
