@@ -11,7 +11,7 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
 });
 
 db.serialize(() => {
-  // 1. Tabela Usuarios
+  // 1. Tabela Usuarios atualizada
   db.run(`
     CREATE TABLE IF NOT EXISTS usuarios (
       user_id INTEGER PRIMARY KEY AUTOINCREMENT,
