@@ -5,23 +5,24 @@ const seed = () => {
 
   const dias = [
     "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
     "Sábado",
   ];
   const hoje = dias[new Date().getDay()];
+  
+  const amanhaIndex = (new Date().getDay() + 1) % 7;
+  const amanha = dias[amanhaIndex];
 
-  const USER_ID = 2;
+  const USER_ID = 1;
 
   db.serialize(() => {
-    db.run(
-      "DELETE FROM horarios_aula WHERE materia_id IN (SELECT materia_id FROM materias WHERE user_id = ?)",
-      [USER_ID]
-    );
     db.run("DELETE FROM tarefas WHERE user_id = ?", [USER_ID]);
+    db.run("DELETE FROM horarios_aula WHERE materia_id IN (SELECT materia_id FROM materias WHERE user_id = ?)", [USER_ID]);
+    db.run("DELETE FROM anotacoes WHERE user_id = ?", [USER_ID]);
     db.run("DELETE FROM materias WHERE user_id = ?", [USER_ID]);
 
     db.run(
@@ -38,6 +39,15 @@ const seed = () => {
     );
 
     db.run(
+      `INSERT INTO anotacoes (anotacao_id, titulo, conteudo, user_id) VALUES (500, 'Resumo de Padrões de Projeto', 'Singleton, Factory, Strategy...', ?)`,
+      [USER_ID]
+    );
+    db.run(
+      `INSERT INTO anotacoes (anotacao_id, titulo, conteudo, user_id) VALUES (501, 'Fórmulas de Integração', 'Revisar regras de Simpson.', ?)`,
+      [USER_ID]
+    );
+
+    db.run(
       `INSERT INTO horarios_aula (materia_id, dia_semana, hora_inicio, hora_fim) VALUES (100, ?, '08:00', '10:00')`,
       [hoje]
     );
@@ -45,8 +55,6 @@ const seed = () => {
       `INSERT INTO horarios_aula (materia_id, dia_semana, hora_inicio, hora_fim) VALUES (101, ?, '10:00', '12:00')`,
       [hoje]
     );
-
-    const amanha = dias[(new Date().getDay() + 1) % 7];
     db.run(
       `INSERT INTO horarios_aula (materia_id, dia_semana, hora_inicio, hora_fim) VALUES (102, ?, '14:00', '16:00')`,
       [amanha]
@@ -61,15 +69,20 @@ const seed = () => {
     const strSemanaVem = dataSemanaVem.toISOString();
 
     db.run(
-      `INSERT INTO tarefas (descricao, data_entrega, status, user_id, materia_id) VALUES ('Entrega do Diagrama de Classes', ?, 'A Fazer', ?, 100)`,
+      `INSERT INTO tarefas (descricao, data_entrega, status, user_id, materia_id, anotacao_id) 
+       VALUES ('Entrega do Diagrama de Classes', ?, 'A Fazer', ?, 100, NULL)`,
       [strAmanha, USER_ID]
     );
+
     db.run(
-      `INSERT INTO tarefas (descricao, data_entrega, status, user_id, materia_id) VALUES ('Lista de Exercícios 02', ?, 'Em Progresso', ?, 101)`,
+      `INSERT INTO tarefas (descricao, data_entrega, status, user_id, materia_id, anotacao_id) 
+       VALUES ('Estudar Design Patterns', ?, 'Em Progresso', ?, 100, 500)`,
       [strSemanaVem, USER_ID]
     );
+
     db.run(
-      `INSERT INTO tarefas (descricao, data_entrega, status, user_id, materia_id) VALUES ('Comprar canetas novas', ?, 'A Fazer', ?, null)`,
+      `INSERT INTO tarefas (descricao, data_entrega, status, user_id, materia_id, anotacao_id) 
+       VALUES ('Comprar canetas novas', ?, 'A Fazer', ?, NULL, NULL)`,
       [strAmanha, USER_ID]
     );
 
