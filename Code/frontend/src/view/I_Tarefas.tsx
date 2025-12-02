@@ -50,17 +50,24 @@ export function Tarefas() {
     }
   }, []);
 
-  async function carregarDados() {
+async function carregarDados() {
     try {
+      console.log("Buscando dados para usuário:", usuario.user_id); // <--- DEBUG 1
+
+      // 1. Busca Tarefas
       const resTarefas = await api.get(`/tarefas?user_id=${usuario.user_id}`);
       setTarefas(resTarefas.data);
 
+      // 2. Busca Matérias
       const resMaterias = await api.get(`/materias?user_id=${usuario.user_id}`);
+      console.log("Matérias encontradas:", resMaterias.data); // <--- DEBUG 2
       setMaterias(resMaterias.data);
 
-      // Buscamos as anotações também!
+      // 3. Busca Anotações
       const resAnotacoes = await api.get(`/anotacoes?user_id=${usuario.user_id}`);
+      console.log("Anotações encontradas:", resAnotacoes.data); // <--- DEBUG 3
       setAnotacoes(resAnotacoes.data);
+
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
     }
