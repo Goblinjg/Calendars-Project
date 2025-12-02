@@ -11,7 +11,6 @@ interface Materia {
   nome_materia: string;
 }
 
-// Interface para Anotação
 interface Anotacao {
   anotacao_id: number;
   titulo: string;
@@ -24,7 +23,7 @@ interface Tarefa {
   status: string;
   nome_materia: string; 
   materia_id: number;
-  titulo_anotacao?: string; // Campo novo vindo do JOIN
+  titulo_anotacao?: string;
 }
 
 interface ApiError {
@@ -34,13 +33,16 @@ interface ApiError {
 export function Tarefas() {
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
   const [materias, setMaterias] = useState<Materia[]>([]);
-  const [anotacoes, setAnotacoes] = useState<Anotacao[]>([]); // Estado novo
+  const [anotacoes, setAnotacoes] = useState<Anotacao[]>([]);
   
+  // Estado de Ordenação
+  const [ordenacao, setOrdenacao] = useState("data"); // 'data' ou 'materia'
+
   // Estados do Formulário
   const [descricao, setDescricao] = useState("");
   const [dataEntrega, setDataEntrega] = useState("");
   const [materiaSelecionada, setMateriaSelecionada] = useState("");
-  const [anotacaoSelecionada, setAnotacaoSelecionada] = useState(""); // Estado novo
+  const [anotacaoSelecionada, setAnotacaoSelecionada] = useState(""); 
 
   const usuario = JSON.parse(localStorage.getItem("usuario_logado") || "{}");
 
@@ -50,28 +52,29 @@ export function Tarefas() {
     }
   }, []);
 
-async function carregarDados() {
+  async function carregarDados() {
     try {
-      console.log("Buscando dados para usuário:", usuario.user_id); // <--- DEBUG 1
-
-      // 1. Busca Tarefas
       const resTarefas = await api.get(`/tarefas?user_id=${usuario.user_id}`);
       setTarefas(resTarefas.data);
 
-      // 2. Busca Matérias
       const resMaterias = await api.get(`/materias?user_id=${usuario.user_id}`);
-      console.log("Matérias encontradas:", resMaterias.data); // <--- DEBUG 2
       setMaterias(resMaterias.data);
 
-      // 3. Busca Anotações
       const resAnotacoes = await api.get(`/anotacoes?user_id=${usuario.user_id}`);
-      console.log("Anotações encontradas:", resAnotacoes.data); // <--- DEBUG 3
       setAnotacoes(resAnotacoes.data);
-
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
     }
   }
+
+  // Lógica de Ordenação
+  const tarefasOrdenadas = [...tarefas].sort((a, b) => {
+    if (ordenacao === 'materia') {
+      return (a.nome_materia || "").localeCompare(b.nome_materia || "");
+    }
+    // Padrão: Data
+    return new Date(a.data_entrega).getTime() - new Date(b.data_entrega).getTime();
+  });
 
   async function handleSalvar(e: React.FormEvent) {
     e.preventDefault();
@@ -84,7 +87,6 @@ async function carregarDados() {
         descricao,
         data_entrega: dataEntrega,
         materia_id: Number(materiaSelecionada),
-        // Envia o ID da anotação se tiver selecionado, senão envia null
         anotacao_id: anotacaoSelecionada ? Number(anotacaoSelecionada) : null,
         user_id: usuario.user_id
       });
@@ -112,7 +114,6 @@ async function carregarDados() {
 
   async function handleExcluir(id: number) {
     if (confirm("Excluir esta tarefa?")) {
-      console.log("Excluindo ID:", id);
       try {
         await api.delete(`/tarefas/${id}`);
         carregarDados();
@@ -125,11 +126,27 @@ async function carregarDados() {
 
   return (
     <div className="space-y-8 fade-in p-6 max-w-5xl mx-auto">
-      <div>
-        <h2 className="text-3xl font-bold text-foreground flex items-center gap-2">
-          <CalendarDays className="text-primary" /> Minhas Tarefas
-        </h2>
-        <p className="text-muted-foreground mt-1">Organize suas entregas.</p>
+      
+      {/* Cabeçalho com Seletor de Ordenação */}
+      <div className="flex justify-between items-end">
+        <div>
+          <h2 className="text-3xl font-bold text-foreground flex items-center gap-2">
+            <CalendarDays className="text-primary" /> Minhas Tarefas
+          </h2>
+          <p className="text-muted-foreground mt-1">Organize suas entregas.</p>
+        </div>
+
+        <div className="flex items-center gap-2">
+            <Label className="text-sm">Ordenar por:</Label>
+            <select 
+              className="h-9 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              value={ordenacao}
+              onChange={(e) => setOrdenacao(e.target.value)}
+            >
+              <option value="data">Data de Entrega</option>
+              <option value="materia">Matéria</option>
+            </select>
+        </div>
       </div>
 
       <Card className="border-border bg-card shadow-sm">
@@ -186,7 +203,8 @@ async function carregarDados() {
       </Card>
 
       <div className="grid gap-4">
-        {tarefas.map(tarefa => (
+        {/* Usamos tarefasOrdenadas aqui */}
+        {tarefasOrdenadas.map(tarefa => (
           <div key={tarefa.tarefa_id} className="flex flex-col md:flex-row items-center justify-between p-4 bg-card border border-border rounded-lg shadow-sm">
              <div className="flex items-start gap-4 mb-4 md:mb-0 w-full md:w-auto">
                 <div className={`mt-1 p-2 rounded-full ${tarefa.status === 'Concluida' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
@@ -199,7 +217,6 @@ async function carregarDados() {
                         {tarefa.nome_materia || "Sem matéria"}
                       </span>
                       
-                      {/* Exibe se tiver Anotação vinculada */}
                       {tarefa.titulo_anotacao && (
                         <span className="flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
                           <StickyNote size={12} />
