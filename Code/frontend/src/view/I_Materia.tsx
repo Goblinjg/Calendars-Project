@@ -31,9 +31,9 @@ export function Materias() {
   const [materias, setMaterias] = useState<Materia[]>([]);
   const [nome, setNome] = useState("");
   const [local, setLocal] = useState("");
-  
+
   const [horarios, setHorarios] = useState<HorarioInput[]>([
-    { dia_semana: "Segunda-feira", hora_inicio: "", hora_fim: "" }
+    { dia_semana: "Segunda-feira", hora_inicio: "", hora_fim: "" },
   ]);
 
   useEffect(() => {
@@ -42,10 +42,14 @@ export function Materias() {
 
   async function carregarMaterias() {
     try {
-      const usuarioLogado = JSON.parse(localStorage.getItem("usuario_logado") || "{}");
+      const usuarioLogado = JSON.parse(
+        localStorage.getItem("usuario_logado") || "{}"
+      );
       if (!usuarioLogado.user_id) return;
 
-      const response = await api.get(`/materias?user_id=${usuarioLogado.user_id}`);
+      const response = await api.get(
+        `/materias?user_id=${usuarioLogado.user_id}`
+      );
       setMaterias(response.data);
     } catch (error) {
       console.error("Erro ao listar:", error);
@@ -53,7 +57,10 @@ export function Materias() {
   }
 
   function addHorario() {
-    setHorarios([...horarios, { dia_semana: "Segunda-feira", hora_inicio: "", hora_fim: "" }]);
+    setHorarios([
+      ...horarios,
+      { dia_semana: "Segunda-feira", hora_inicio: "", hora_fim: "" },
+    ]);
   }
 
   function removeHorario(index: number) {
@@ -61,7 +68,11 @@ export function Materias() {
     setHorarios(novosHorarios);
   }
 
-  function updateHorario(index: number, campo: keyof HorarioInput, valor: string) {
+  function updateHorario(
+    index: number,
+    campo: keyof HorarioInput,
+    valor: string
+  ) {
     const novosHorarios = [...horarios];
     novosHorarios[index][campo] = valor;
     setHorarios(novosHorarios);
@@ -71,7 +82,9 @@ export function Materias() {
     e.preventDefault();
     if (!nome) return alert("O nome da matéria é obrigatório!");
 
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuario_logado") || "{}");
+    const usuarioLogado = JSON.parse(
+      localStorage.getItem("usuario_logado") || "{}"
+    );
     if (!usuarioLogado || !usuarioLogado.user_id) {
       alert("Sessão expirada. Faça login novamente.");
       return;
@@ -82,13 +95,12 @@ export function Materias() {
         nome_materia: nome,
         local,
         user_id: usuarioLogado.user_id,
-        horarios 
+        horarios,
       });
-      
+
       alert("Matéria cadastrada com sucesso!");
       limparFormulario();
       carregarMaterias();
-
     } catch (error) {
       const err = error as ApiError;
       console.error("Erro ao salvar:", err);
@@ -99,7 +111,9 @@ export function Materias() {
   function limparFormulario() {
     setNome("");
     setLocal("");
-    setHorarios([{ dia_semana: "Segunda-feira", hora_inicio: "", hora_fim: "" }]);
+    setHorarios([
+      { dia_semana: "Segunda-feira", hora_inicio: "", hora_fim: "" },
+    ]);
   }
 
   async function handleExcluir(id: number) {
@@ -161,19 +175,29 @@ export function Materias() {
                 <Label className="text-base font-semibold flex items-center gap-2">
                   <Clock size={16} /> Horários de Aula
                 </Label>
-                <Button type="button" variant="outline" size="sm" onClick={addHorario}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addHorario}
+                >
                   <Plus size={14} className="mr-1" /> Adicionar Horário
                 </Button>
               </div>
 
               {horarios.map((horario, index) => (
-                <div key={index} className="flex gap-3 items-end p-3 bg-secondary/20 rounded-md border border-border">
+                <div
+                  key={index}
+                  className="flex gap-3 items-end p-3 bg-secondary/20 rounded-md border border-border"
+                >
                   <div className="w-1/3">
                     <Label className="text-xs text-muted-foreground">Dia</Label>
                     <select
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       value={horario.dia_semana}
-                      onChange={(e) => updateHorario(index, "dia_semana", e.target.value)}
+                      onChange={(e) =>
+                        updateHorario(index, "dia_semana", e.target.value)
+                      }
                     >
                       <option value="Segunda-feira">Segunda-feira</option>
                       <option value="Terça-feira">Terça-feira</option>
@@ -184,15 +208,35 @@ export function Materias() {
                     </select>
                   </div>
                   <div className="w-1/3">
-                    <Label className="text-xs text-muted-foreground">Início</Label>
-                    <Input type="time" value={horario.hora_inicio} onChange={(e) => updateHorario(index, "hora_inicio", e.target.value)} />
+                    <Label className="text-xs text-muted-foreground">
+                      Início
+                    </Label>
+                    <Input
+                      type="time"
+                      value={horario.hora_inicio}
+                      onChange={(e) =>
+                        updateHorario(index, "hora_inicio", e.target.value)
+                      }
+                    />
                   </div>
                   <div className="w-1/3">
                     <Label className="text-xs text-muted-foreground">Fim</Label>
-                    <Input type="time" value={horario.hora_fim} onChange={(e) => updateHorario(index, "hora_fim", e.target.value)} />
+                    <Input
+                      type="time"
+                      value={horario.hora_fim}
+                      onChange={(e) =>
+                        updateHorario(index, "hora_fim", e.target.value)
+                      }
+                    />
                   </div>
                   {horarios.length > 1 && (
-                    <Button type="button" variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => removeHorario(index)}>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:text-destructive"
+                      onClick={() => removeHorario(index)}
+                    >
                       <X size={18} />
                     </Button>
                   )}
@@ -201,8 +245,12 @@ export function Materias() {
             </div>
 
             <div className="flex gap-3 justify-end pt-2 border-t">
-              <Button type="button" variant="ghost" onClick={limparFormulario}>Cancelar</Button>
-              <Button type="submit" className="gap-2"><Plus size={18} /> Salvar Matéria</Button>
+              <Button type="button" variant="ghost" onClick={limparFormulario}>
+                Cancelar
+              </Button>
+              <Button type="submit" className="gap-2">
+                <Plus size={18} /> Salvar Matéria
+              </Button>
             </div>
           </form>
         </CardContent>
@@ -211,20 +259,32 @@ export function Materias() {
       {/* Lista */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {materias.map((materia) => (
-          <Card key={materia.materia_id} className="group hover:shadow-md transition-all">
+          <Card
+            key={materia.materia_id}
+            className="group hover:shadow-md transition-all"
+          >
             <CardHeader className="flex flex-row items-start justify-between pb-2">
               <div className="space-y-1">
-                <CardTitle className="text-lg font-bold line-clamp-1">{materia.nome_materia}</CardTitle>
+                <CardTitle className="text-lg font-bold line-clamp-1">
+                  {materia.nome_materia}
+                </CardTitle>
                 <div className="flex items-center text-sm text-muted-foreground gap-1">
                   <MapPin size={14} /> {materia.local || "Local não definido"}
                 </div>
               </div>
-              <Button size="icon" variant="ghost" className="text-destructive opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleExcluir(materia.materia_id)}>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={() => handleExcluir(materia.materia_id)}
+              >
                 <Trash2 size={14} />
               </Button>
             </CardHeader>
             <CardContent>
-               <div className="text-sm text-muted-foreground/60 italic">Matéria cadastrada.</div>
+              <div className="text-sm text-muted-foreground/60 italic">
+                Matéria cadastrada.
+              </div>
             </CardContent>
           </Card>
         ))}

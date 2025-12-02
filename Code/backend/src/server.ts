@@ -1,6 +1,6 @@
-import express from 'express';
-import cors from 'cors';
-import router from './router'; // Importa as rotas que definimos
+import express from "express";
+import cors from "cors";
+import router from "./router"; // Importa as rotas que definimos
 
 const app = express();
 const PORT = 3000;
@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(router);
 
 // Rota de teste simples (para ver se o servidor responde)
-app.get('/', (req, res) => {
-  res.send('Backend Calendars está funcionando!');
+app.get("/", (req, res) => {
+  res.send("Backend Calendars está funcionando!");
 });
 
 app.listen(PORT, () => {

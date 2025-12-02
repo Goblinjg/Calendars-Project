@@ -1,12 +1,12 @@
-import { Request, Response } from 'express';
-import db from '../database/db';
+import { Request, Response } from "express";
+import db from "../database/db";
 
 export const CalendarioController = {
   // RF012: Busca todas as aulas para montar a grade
   listarAulas: (req: Request, res: Response) => {
     const { user_id } = req.query;
 
-    if (!user_id) return res.status(400).json({ error: 'User ID obrigatório' });
+    if (!user_id) return res.status(400).json({ error: "User ID obrigatório" });
 
     const sql = `
       SELECT h.dia_semana, h.hora_inicio, h.hora_fim, m.nome_materia, m.local
@@ -30,5 +30,5 @@ export const CalendarioController = {
       if (err) return res.status(500).json({ error: err.message });
       res.json(rows);
     });
-  }
+  },
 };

@@ -12,8 +12,12 @@ interface Aula {
 }
 
 const DIAS_ORDEM = [
-  "Segunda-feira", "Terça-feira", "Quarta-feira", 
-  "Quinta-feira", "Sexta-feira", "Sábado"
+  "Segunda-feira",
+  "Terça-feira",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado",
 ];
 
 export function Calendario() {
@@ -22,15 +26,16 @@ export function Calendario() {
 
   useEffect(() => {
     if (usuario.user_id) {
-      api.get(`/calendario?user_id=${usuario.user_id}`)
-         .then(res => setAulas(res.data))
-         .catch(err => console.error(err));
+      api
+        .get(`/calendario?user_id=${usuario.user_id}`)
+        .then((res) => setAulas(res.data))
+        .catch((err) => console.error(err));
     }
-  }, []);
+  }, [usuario.user_id]);
 
   // Função para filtrar aulas de um dia específico
   const getAulasDoDia = (dia: string) => {
-    return aulas.filter(a => a.dia_semana === dia);
+    return aulas.filter((a) => a.dia_semana === dia);
   };
 
   return (
@@ -46,7 +51,7 @@ export function Calendario() {
 
       {/* Grid Responsivo: 1 coluna no mobile, até 6 no desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        {DIAS_ORDEM.map(dia => (
+        {DIAS_ORDEM.map((dia) => (
           <div key={dia} className="flex flex-col gap-3">
             {/* Cabeçalho do Dia */}
             <div className="bg-primary/10 text-primary font-bold text-center py-2 rounded-md border border-primary/20">
@@ -61,7 +66,10 @@ export function Calendario() {
                 </div>
               ) : (
                 getAulasDoDia(dia).map((aula, idx) => (
-                  <Card key={idx} className="shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-primary">
+                  <Card
+                    key={idx}
+                    className="shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-primary"
+                  >
                     <CardContent className="p-3">
                       <div className="font-bold text-sm line-clamp-2 leading-tight mb-2">
                         {aula.nome_materia}

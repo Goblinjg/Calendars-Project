@@ -14,7 +14,7 @@ const seed = () => {
   ];
   const hoje = dias[new Date().getDay()];
 
-  const USER_ID = 4;
+  const USER_ID = 2;
 
   db.serialize(() => {
     db.run(
