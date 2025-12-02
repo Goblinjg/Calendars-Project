@@ -4,6 +4,7 @@ import { Cadastro } from "./view/I_Cadastro";
 import { Anotacoes } from "./view/I_Anotacoes";
 import { Dashboard } from "./view/I_Dashboard"; 
 import { Materias } from './view/I_Materia';
+import { Tarefas } from './view/I_Tarefas';
 import { Layout } from "./components/ui/Layout";
 import type { JSX } from "react";
 
@@ -41,7 +42,12 @@ export function App() {
         >
           <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* Rota para anotações */}
+          <Route path="/tarefas" element={
+            <RotaPrivada>
+              <Tarefas />
+            </RotaPrivada>
+            } 
+            />
           <Route path="/anotacoes" element={<Anotacoes />} />
           <Route path="/materias" element={<RotaPrivada><Materias /></RotaPrivada>} />
 
