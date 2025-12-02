@@ -3,6 +3,7 @@ import { Login } from "./view/I_Login";
 import { Cadastro } from "./view/I_Cadastro"; 
 import { Anotacoes } from "./view/I_Anotacoes";
 import { Dashboard } from "./view/I_Dashboard"; 
+import { Materias } from './view/I_Materia';
 import { Layout } from "./components/ui/Layout";
 import type { JSX } from "react";
 
@@ -42,6 +43,7 @@ export function App() {
 
           {/* Rota para anotações */}
           <Route path="/anotacoes" element={<Anotacoes />} />
+          <Route path="/materias" element={<RotaPrivada><Materias /></RotaPrivada>} />
 
         </Route>
       </Routes>

@@ -52,5 +52,20 @@ export const MateriaController = {
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
+  },
+  excluir: async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID da matéria é obrigatório.' });
+    }
+
+    try {
+      await MateriaModel.excluir(Number(id));
+      // Graças ao ON DELETE CASCADE no banco, os horários somem sozinhos.
+      res.json({ mensagem: 'Matéria excluída com sucesso!' });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   }
 };

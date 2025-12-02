@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UsuarioController } from './controller/UsuarioController';
 import { AnotacaoController } from './controller/AnotacaoController';
 import { MateriaController } from './controller/MateriaController';
+import { DashboardController } from './controller/DashboardController';
 
 const router = Router();
 
@@ -24,5 +25,7 @@ router.delete('/anotacoes/:id', AnotacaoController.excluir);
 // --- NOVAS ROTAS: Matérias (RF011) ---
 router.post('/materias', MateriaController.criar);
 router.get('/materias', MateriaController.listar);
+router.delete('/materias/:id', MateriaController.excluir);
 
+router.get('/dashboard/resumo', DashboardController.getResumo); 
 export default router;
