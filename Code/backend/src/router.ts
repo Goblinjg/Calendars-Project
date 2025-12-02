@@ -4,7 +4,8 @@ import { UsuarioController } from './controller/UsuarioController';
 import { AnotacaoController } from './controller/AnotacaoController';
 import { MateriaController } from './controller/MateriaController';
 import { DashboardController } from './controller/DashboardController';
-import { TarefaController } from './controller/TarefaController'; // <--- Importe o novo Controller
+import { TarefaController } from './controller/TarefaController'; 
+import { CalendarioController } from './controller/CalendarioController';
 
 const router = Router();
 
@@ -37,5 +38,8 @@ router.post('/tarefas', TarefaController.criar);           // Cria vinculando a 
 router.get('/tarefas', TarefaController.listar);           // Lista com JOINs
 router.patch('/tarefas/:id/status', TarefaController.atualizarStatus); // Atualiza só o status
 router.delete('/tarefas/:id', TarefaController.excluir);   // Exclui
+
+// --- ROTA DO CALENDARIO (RF012) ---
+router.get('/calendario', CalendarioController.listarAulas);
 
 export default router;
