@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect x="32" y="80" width="448" height="384" rx="48" ry="48" fill="#000000"/>
+
+  <path d="M128 48v64M384 48v64" stroke="#ffffff" stroke-width="48" stroke-linecap="round"/>
+
+  <path d="M32 192h448" stroke="#ffffff" stroke-width="32" stroke-opacity="0.5"/>
+
+  <rect x="96" y="248" width="320" height="200" fill="#ffffff" rx="16"/>
+
+  <path d="M144 288h48v48h-48z
+           M232 288h48v48h-48z
+           M320 288h48v48h-48z
+           M144 368h48v48h-48z
+           M232 368h48v48h-48z" fill="#000000"/>
+</svg>

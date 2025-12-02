@@ -29,7 +29,8 @@ export function Layout() {
     <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
       {/* Sidebar */}
       <aside className="w-64 border-r border-border bg-card flex flex-col shadow-lg">
-        <div className="p-6 border-b border-border">
+        <div className="p-6 border-b border-border flex items-center gap-3">
+          <img src="/favicon.svg" alt="Logo" className="h-8 w-8" />
           <h1 className="text-2xl font-bold text-primary tracking-tight">
             Calendars
           </h1>
