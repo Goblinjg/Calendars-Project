@@ -7,14 +7,14 @@ export const DashboardController = {
 
     if (!user_id) return res.status(400).json({ error: "User ID obrigatório" });
 
-    // 1. Pegar o dia da semana atual (0 = Domingo, 1 = Segunda...)
+    // AJUSTE: Os nomes devem ser iguais aos salvos na MateriasView ("-feira")
     const diasSemana = [
       "Domingo",
-      "Segunda",
-      "Terça",
-      "Quarta",
-      "Quinta",
-      "Sexta",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
       "Sábado",
     ];
     const hoje = diasSemana[new Date().getDay()];
@@ -28,6 +28,7 @@ export const DashboardController = {
       ORDER BY h.hora_inicio ASC
     `;
 
+    // Nota: Como acabamos de criar a tabela, essa query retornará vazio (sem erro)
     const sqlTarefas = `
       SELECT t.tarefa_id, t.descricao, t.data_entrega, t.status, m.nome_materia
       FROM tarefas t

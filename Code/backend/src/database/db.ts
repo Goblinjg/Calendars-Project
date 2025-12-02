@@ -44,6 +44,7 @@ db.serialize(() => {
   `);
 
   // 4. Tabela Tarefas
+  // 4. Tabela Tarefas (ATUALIZADA)
   db.run(`
     CREATE TABLE IF NOT EXISTS tarefas (
       tarefa_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -52,8 +53,10 @@ db.serialize(() => {
       status TEXT DEFAULT 'A Fazer',
       user_id INTEGER,
       materia_id INTEGER,
+      anotacao_id INTEGER,  -- <--- FALTAVA ESSA COLUNA!
       FOREIGN KEY(user_id) REFERENCES usuarios(user_id) ON DELETE CASCADE,
-      FOREIGN KEY(materia_id) REFERENCES materias(materia_id) ON DELETE SET NULL
+      FOREIGN KEY(materia_id) REFERENCES materias(materia_id) ON DELETE SET NULL,
+      FOREIGN KEY(anotacao_id) REFERENCES anotacoes(anotacao_id) ON DELETE SET NULL
     )
   `);
 

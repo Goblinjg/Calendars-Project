@@ -59,5 +59,15 @@ export const MateriaModel = {
         else resolve(rows as Materia[]);
       });
     });
+  },
+  excluir: (id: number): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const sql = 'DELETE FROM materias WHERE materia_id = ?';
+      
+      db.run(sql, [id], function (err) {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
   }
 };
