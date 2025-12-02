@@ -97,6 +97,11 @@ npm install
 cd Code/frontend
 npm install
 # npm run dev
+
+#3. Execução de testes:
+cd Teste
+python -m pip install selenium
+python teste.py
 ```
 
 
