@@ -93,6 +93,9 @@ cd Code/backend
 npm install
 # npm run dev
 
+# 1.1. Popule o banco de dados (Seed) caso queira
+npx ts-node src/database/seed.ts
+
 # 2. Configure o frontend (em outro terminal, começando da raiz do projeto)
 cd Code/frontend
 npm install
